@@ -90,28 +90,38 @@ function generateRandomFreelancer() {
 
 let entries = 0; // Initialize a counter for the entries
 const maxEntries = 15 - freelancers.length;
+// New changes to keep the list going w/ freelancers instead of stopping everything after 15 entries
+setInterval(() => {
+    if (freelancers.length >= 15) {
+        freelancers.shift(); // Remove the oldest freelancer to keep the list to a maximum of 15
+    }
+    const newFreelancer = generateRandomFreelancer();
+    freelancers.push(newFreelancer); // Add the new freelancer
+    console.log(`Adding a new freelancer: `, newFreelancer); // Log the action to the console
+    renderFreelancers(); // Re-render the list with the new addition/replacement
+}, 5000);
 
 // Interval setup
-const intervalId = setInterval(() => {
-    if (entries < maxEntries) {
-        // If we have more than 6 freelancers, start replacing the oldest ones
+// const intervalId = setInterval(() => {
+//     if (entries < maxEntries) {
+//         // If we have more than 6 freelancers, start replacing the oldest ones
 
-        // Generate and add a new freelancer
-        const newFreelancer = generateRandomFreelancer();
-        if (freelancers.length >= 15) {
-            freelancers.shift();
-        } else {
-            freelancers.push(newFreelancer);
-        }
+//         // Generate and add a new freelancer
+//         const newFreelancer = generateRandomFreelancer();
+//         if (freelancers.length >= 15) {
+//             freelancers.shift();
+//         } else {
+//             freelancers.push(newFreelancer);
+//         }
         
-        console.log(`Adding a new freelancer: `, newFreelancer); // Log the newly added freelancer
-        renderFreelancers(); // Re-render the list of freelancers with the update
+//         console.log(`Adding a new freelancer: `, newFreelancer); // Log the newly added freelancer
+//         renderFreelancers(); // Re-render the list of freelancers with the update
         
-        entries++; // Increment the counter since we've added a new entry
-    } else {
-        clearInterval(intervalId); // Stop the interval once we reach the max number of entries
-        console.log("Max freelancers reached. Stopping interval.");
-    }
-}, 5000);
+//         entries++; // Increment the counter since we've added a new entry
+//     } else {
+//         clearInterval(intervalId); // Stop the interval once we reach the max number of entries
+//         console.log("Max freelancers reached. Stopping interval.");
+//     }
+// }, 5000);
 
 renderFreelancers(); // Initial call to display the freelancers
